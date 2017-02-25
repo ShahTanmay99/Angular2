@@ -1,0 +1,127 @@
+    <div class="row">
+        <div class="col-­md-­6 well">
+            <form [ngFormModel]= "form">
+                <fieldset>
+                    <Legend>New User</Legend>
+                        <div class="form-group">
+                            <label for="fname"> First Name: </label>
+                            <input 
+                                ngControl= "fname" 
+                                #fname="ngForm" 
+                                id="fname" 
+                                type="text" 
+                                class="form-control" 
+                                required>
+                            <!--<div *ngIf="fname.touched && fname.errors">-->
+                            <div *ngIf="fname.touched && !fname.valid" class="alert alert-danger"> Enter First Name </div>
+                            <!--</div>-->
+                            <!--<div *ngIf="fname.errors.minlength" class="alert alert-danger"> Enter Min {{fname.errors.minlength.requiredLength}} Characters </div>
+                            </div>-->
+                        </div>
+                        <div class="form-group">
+                            <label for="email"> Email: </label>
+                            <input 
+                                ngControl= "email" 
+                                #email="ngForm" 
+                                id="email" 
+                                type="text" 
+                                class="form-control"
+                                required>
+                            <!--<div *ngIf="email.touched && email.errors">
+                            <div *ngIf="email.errors.required" class="alert alert-danger"> Enter Email </div>-->
+                            <div *ngIf="email.touched && !email.isEmailValid" class="alert alert-danger"> Enter Valid Email </div>
+                            <!--</div>-->
+                        </div>
+                        <div class="form-group">
+                            <label for="phone"> Phone: </label>
+                            <input 
+                                ngControl= "phone" 
+                                #phone="ngForm" 
+                                id="phone" 
+                                type="text" 
+                                class="form-control" 
+                                required
+                                minlength="3">
+                            <!--<div *ngIf="fname.touched && fname.errors">
+                            <div *ngIf="fname.errors.required" class="alert alert-danger"> Enter Phone Number </div>
+                            <div *ngIf="fname.errors.minlength" class="alert alert-danger"> Enter Min {{fname.errors.minlength.requiredLength}} Characters </div>
+                            </div>-->
+                        </div>
+                </fieldset>
+                <fieldset>
+                <Legend> Address </Legend>
+                <div class="form-group">
+                    <label for="street"> Street: </label>
+                    <input 
+                        ngControl= "street" 
+                        #street="ngForm" 
+                        id="street" 
+                        type="text" 
+                        class="form-control" 
+                        required
+                        minlength="3">
+                    <!--<div *ngIf="fname.touched && fname.errors">
+                    <div *ngIf="fname.errors.required" class="alert alert-danger"> Enter Street</div>
+                    <div *ngIf="fname.errors.minlength" class="alert alert-danger"> Enter Min {{fname.errors.minlength.requiredLength}} Characters </div>
+                    </div>-->
+                </div>
+                <div class="form-group">
+                    <label for="suite"> Suite </label>
+                    <input 
+                        ngControl= "suite" 
+                        #suite="ngForm" 
+                        id="suite" 
+                        type="text" 
+                        class="form-control" 
+                        required
+                        minlength="3">
+                    <!--<div *ngIf="fname.touched && fname.errors">
+                    <div *ngIf="fname.errors.required" class="alert alert-danger"> Enter Suite </div>
+                    <div *ngIf="fname.errors.minlength" class="alert alert-danger"> Enter Min {{fname.errors.minlength.requiredLength}} Characters </div>
+                    </div>-->
+                </div>
+                <div class="form-group">
+                    <label for="city"> City: </label>
+                    <input 
+                        ngControl= "city" 
+                        #city="ngForm" 
+                        id="city" 
+                        type="text" 
+                        class="form-control" 
+                        required
+                        minlength="3">
+                    <!--<div *ngIf="fname.touched && fname.errors">
+                    <div *ngIf="fname.errors.required" class="alert alert-danger"> Enter City </div>
+                    <div *ngIf="fname.errors.minlength" class="alert alert-danger"> Enter Min {{fname.errors.minlength.requiredLength}} Characters </div>
+                    </div>-->
+                </div>
+                <div class="form-group">
+                    <label for="zipcode"> Zip Code: </label>
+                    <input 
+                        ngControl= "zipcode" 
+                        #zipcode="ngForm" 
+                        id="zipcode" 
+                        type="text" 
+                        class="form-control" 
+                        required
+                        minlength="3">
+                    <!--<div *ngIf="fname.touched && fname.errors">
+                    <div *ngIf="fname.errors.required" class="alert alert-danger"> Enter Zip Code </div>
+                    <div *ngIf="fname.errors.minlength" class="alert alert-danger"> Enter Min {{fname.errors.minlength.requiredLength}} Characters </div>
+                    </div>-->
+                </div>
+                </fieldset>
+                <!--<div class="form-group">
+                    <label for="comment"> Comment:</label>
+                    <textarea 
+                        ngControl= "comment" 
+                        #comment="ngForm" 
+                        id="comment" 
+                        cols="30" rows="10" 
+                        class="form-control" 
+                        required></textarea>
+                    <!--<div *ngIf="comment.touched && !comment.valid" class="alert alert-danger"> Enter Comments </div>-->
+                <button class="btn btn-primary" type="submit" [disabled]="!form.valid">Save</button>
+            </form>
+          </div>
+        </div>
