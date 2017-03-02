@@ -25,8 +25,9 @@ System.register(['angular2/core', './userDetails.service', 'angular2/router'], f
             }],
         execute: function() {
             userComponent = (function () {
-                function userComponent(_userService) {
+                function userComponent(_userService, _router) {
                     this._userService = _userService;
+                    this._router = _router;
                 }
                 userComponent.prototype.ngOnInit = function () {
                     var _this = this;
@@ -34,13 +35,28 @@ System.register(['angular2/core', './userDetails.service', 'angular2/router'], f
                         _this.details = details;
                     });
                 };
+                userComponent.prototype.deleteUser = function (User) {
+                    var _this = this;
+                    if (confirm("Are you sure you want to delete user " + User.name)) {
+                        var i = this.details.indexOf(User);
+                        this.details.splice(i, 1);
+                        this._userService.deleteUser(User.id)
+                            .subscribe(null, function (err) {
+                            alert("Could not delete the user.");
+                            // Revert the view back to its original state
+                            // by putting the user object at the index
+                            // it used to be.
+                            _this.details.splice(i, 0, User);
+                        });
+                    }
+                };
                 userComponent = __decorate([
                     core_1.Component({
                         selector: 'user',
-                        template: "<h1>User</h1>\n    <a [routerLink]=\"['AddUser']\"><button type=\"button\" class=\"btn btn-primary\">Add User</button></a>\n    <table class=\"table table-bordered\">\n        <tr>\n            <th>Name</th>\n            <th>Email</th>\n            <th>Edit</th>\n            <th>Delete</th>\n        <tr>\n        <tr *ngFor= \"#detail of details\">\n            <td>{{detail.name}}</td>\n            <td>{{detail.email}}</td>\n            <td><i class=\"glyphicon glyphicon-edit\"></i></td>\n            <td><i class=\"glyphicon glyphicon-remove\"></i></td>\n        <tr>\n    </table>",
+                        template: "<h1>User</h1>\n    <a [routerLink]=\"['AddUser']\"><button type=\"button\" class=\"btn btn-primary\">Add User</button></a>\n    <table class=\"table table-bordered\">\n        <tr>\n            <th>Name</th>\n            <th>Email</th>\n            <th>Edit</th>\n            <th>Delete</th>\n        <tr>\n        <tr *ngFor= \"#detail of details\">\n            <td>{{detail.name}}</td>\n            <td>{{detail.email}}</td>\n            <td><i class=\"glyphicon glyphicon-edit\" [routerLink]=\"['EditUser',{id:detail.id}]\"></i></td>\n            <td><i class=\"glyphicon glyphicon-remove\" (click)= \"deleteUser(detail)\"></i></td>\n        <tr>\n    </table>",
                         directives: [router_1.ROUTER_DIRECTIVES]
                     }), 
-                    __metadata('design:paramtypes', [userDetails_service_1.userService])
+                    __metadata('design:paramtypes', [userDetails_service_1.userService, router_1.Router])
                 ], userComponent);
                 return userComponent;
             }());

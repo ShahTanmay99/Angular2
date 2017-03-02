@@ -1,11 +1,12 @@
     <div class="row">
         <div class="col-­md-­6 well">
-            <form [ngFormModel]= "form">
+            <form [ngFormModel]= "form" (ngSubmit)="save()">
                 <fieldset>
-                    <Legend>New User</Legend>
+                    <Legend> {{title}} </Legend>
                         <div class="form-group">
                             <label for="fname"> First Name: </label>
                             <input 
+                                [(ngModel)]= "user.name"
                                 ngControl= "fname" 
                                 #fname="ngForm" 
                                 id="fname" 
@@ -17,6 +18,7 @@
                         <div class="form-group">
                             <label for="email"> Email: </label>
                             <input 
+                                [(ngModel)]= "user.email"
                                 ngControl= "email" 
                                 #email="ngForm" 
                                 id="email" 
@@ -31,6 +33,7 @@
                         <div class="form-group">
                             <label for="phone"> Phone: </label>
                             <input 
+                                [(ngModel)]= "user.phone"
                                 ngControl= "phone" 
                                 #phone="ngForm" 
                                 id="phone" 
@@ -38,11 +41,12 @@
                                 class="form-control">
                         </div>
                 </fieldset>
-                <fieldset>
+                <fieldset ngControlGroup="address">
                 <Legend> Address </Legend>
                 <div class="form-group">
                     <label for="street"> Street: </label>
                     <input 
+                        [(ngModel)]= "user.address.street"
                         ngControl= "street" 
                         #street="ngForm" 
                         id="street" 
@@ -52,6 +56,7 @@
                 <div class="form-group">
                     <label for="suite"> Suite </label>
                     <input 
+                        [(ngModel)]= "user.address.suite"
                         ngControl= "suite" 
                         #suite="ngForm" 
                         id="suite" 
@@ -61,6 +66,7 @@
                 <div class="form-group">
                     <label for="city"> City: </label>
                     <input 
+                        [(ngModel)]= "user.address.city"
                         ngControl= "city" 
                         #city="ngForm" 
                         id="city" 
@@ -69,7 +75,8 @@
                 </div>
                 <div class="form-group">
                     <label for="zipcode"> Zip Code: </label>
-                    <input 
+                    <input
+                        [(ngModel)]= "user.address.zipcode" 
                         ngControl= "zipcode" 
                         #zipcode="ngForm" 
                         id="zipcode" 

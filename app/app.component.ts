@@ -6,13 +6,17 @@ import {homeComponent} from './home.component';
 import {userService} from './userDetails.service';
 import {addUserComponent} from './addUser.component';
 import {RouteConfig, ROUTER_DIRECTIVES} from 'angular2/router';
+import {editUserComponent} from './editUser.component';
+import {notFound} from './NotFound';
 
 @RouteConfig([
     {path:'/', name:'Home', component:homeComponent, useAsDefault:true},
     {path:'/user', name: 'User', component: userComponent},
+    {path:'/user/:id', name: 'EditUser', component: addUserComponent},
     {path:'/addUser', name: 'AddUser', component: addUserComponent},
     {path: '/post' , name: 'Post', component: postComponent},
-    {path: '/*other', name: 'Other', redirectTo: ['Home']}
+    {path: '/*other', name: 'Other', redirectTo: ['Home']},
+    {path:'/user/*other', name: 'NotFound', component: notFound}
 ])
 @Component({
     selector: 'my-app',
