@@ -1,4 +1,4 @@
-System.register(['angular2/core', './userDetails.service'], function(exports_1, context_1) {
+System.register(['angular2/core', './userDetails.service', './loadingIcon.component'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(['angular2/core', './userDetails.service'], function(exports_1, 
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, userDetails_service_1;
+    var core_1, userDetails_service_1, loadingIcon_component_1;
     var postList;
     return {
         setters:[
@@ -19,12 +19,16 @@ System.register(['angular2/core', './userDetails.service'], function(exports_1, 
             },
             function (userDetails_service_1_1) {
                 userDetails_service_1 = userDetails_service_1_1;
+            },
+            function (loadingIcon_component_1_1) {
+                loadingIcon_component_1 = loadingIcon_component_1_1;
             }],
         execute: function() {
             postList = (function () {
                 function postList(_userService) {
                     this._userService = _userService;
                     this.isLoading = true;
+                    this.isLoad = true;
                     this.isVisible = false;
                 }
                 postList.prototype.ngOnInit = function () {
@@ -43,11 +47,13 @@ System.register(['angular2/core', './userDetails.service'], function(exports_1, 
                     this._userService.getPostComments(detail.id)
                         .subscribe(function (Comments) {
                         _this.Comments = Comments;
+                        _this.isLoad = false;
                     });
                 };
                 postList = __decorate([
                     core_1.Component({
-                        template: "<div class=\"row\">\n    <div class=\"col-md-6\">\n            <div *ngIf=\"isLoading\"><i class=\"fa fa-spinner fa-spin fa-3x\"></i></div>\n                <ul class=\"list-group\">\n                        <li *ngFor=\"#li of list\" class=\"list-group-item\" (click)= \"onClick(li)\" >{{li.title}}</li>\n                </ul>\n    </div>\n    <div class=\"col-md-6\" *ngIf=\"isVisible\">\n                <div class=\"panel panel-default\">\n                    <div class=\"panel-heading\">\n                        <h3 class=\"panel-title\">{{x.title}}</h3>\n                    </div>\n                        <div class=\"panel-body\">{{x.body}}</div>\n                </div>\n                <div class=\"media\" *ngFor=\"#comment of Comments\">\n                    <div class=\"media-left\">\n                        <a href=\"#\">\n                        <img class=\"media-object\" src=\"http://lorempixel.com/80/80/people/{{comment.id}}\">\n                        </a>\n                    </div>\n                    <div class=\"media-body\">\n                        <h4 class=\"media-heading\">{{comment.name}}</h4>\n                        {{comment.body}}\n                    </div>\n                </div>\n    </div>\n    </div>            "
+                        template: "<div class=\"row\">\n    <div class=\"col-md-6\">\n                <Spinner [visible]= \"isLoading\"></Spinner>\n                <ul class=\"list-group\">\n                        <li *ngFor=\"#li of list\" class=\"list-group-item\" (click)= \"onClick(li)\" >{{li.title}}</li>\n                </ul>\n    </div>\n    <div class=\"col-md-6\" *ngIf=\"isVisible\">\n                <div class=\"panel panel-default\">\n                    <div class=\"panel-heading\">\n                        <h3 class=\"panel-title\">{{x.title}}</h3>\n                    </div>\n                        <div class=\"panel-body\">{{x.body}}</div>\n                </div>\n                <Spinner [visible]= \"isLoad\"></Spinner>\n                <div class=\"media\" *ngFor=\"#comment of Comments\">\n                    <div class=\"media-left\">\n                        <a href=\"#\">\n                        <img class=\"media-object\" src=\"http://lorempixel.com/80/80/people/{{comment.id}}\">\n                        </a>\n                    </div>\n                    <div class=\"media-body\">\n                        <h4 class=\"media-heading\">{{comment.name}}</h4>\n                        {{comment.body}}\n                    </div>\n                </div>\n    </div>\n    </div>            ",
+                        directives: [loadingIcon_component_1.loadIcon]
                     }), 
                     __metadata('design:paramtypes', [userDetails_service_1.userService])
                 ], postList);

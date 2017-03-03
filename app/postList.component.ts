@@ -1,9 +1,11 @@
 import {Component, OnInit} from 'angular2/core';
 import {userService} from './userDetails.service';
+import {loadIcon} from './loadingIcon.component';
+
 @Component({
     template: `<div class="row">
     <div class="col-md-6">
-            <div *ngIf="isLoading"><i class="fa fa-spinner fa-spin fa-3x"></i></div>
+                <Spinner [visible]= "isLoading"></Spinner>
                 <ul class="list-group">
                         <li *ngFor="#li of list" class="list-group-item" (click)= "onClick(li)" >{{li.title}}</li>
                 </ul>
@@ -15,6 +17,7 @@ import {userService} from './userDetails.service';
                     </div>
                         <div class="panel-body">{{x.body}}</div>
                 </div>
+                <Spinner [visible]= "isLoad"></Spinner>
                 <div class="media" *ngFor="#comment of Comments">
                     <div class="media-left">
                         <a href="#">
@@ -27,7 +30,8 @@ import {userService} from './userDetails.service';
                     </div>
                 </div>
     </div>
-    </div>            `
+    </div>            `,
+    directives:[loadIcon]
 })
 
 export class postList implements OnInit{
@@ -36,6 +40,7 @@ export class postList implements OnInit{
     }
     x;
     isLoading=true;
+    isLoad=true;
     isVisible=false;
     list: any[]
     Comments: any[]
@@ -54,6 +59,7 @@ export class postList implements OnInit{
         this._userService.getPostComments(detail.id)
         .subscribe(Comments => {
             this.Comments=Comments;
+            this.isLoad=false;
         })  
         
     }
