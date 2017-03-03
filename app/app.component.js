@@ -1,4 +1,4 @@
-System.register(['angular2/core', './navbar.component', './user.component', './post.component', './home.component', './userDetails.service', './addUser.component', 'angular2/router', './NotFound'], function(exports_1, context_1) {
+System.register(['angular2/core', './navbar.component', './user.component', './home.component', './userDetails.service', './addUser.component', 'angular2/router', './postList.component', './NotFound'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(['angular2/core', './navbar.component', './user.component', './p
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, navbar_component_1, user_component_1, post_component_1, home_component_1, userDetails_service_1, addUser_component_1, router_1, NotFound_1;
+    var core_1, navbar_component_1, user_component_1, home_component_1, userDetails_service_1, addUser_component_1, router_1, postList_component_1, NotFound_1;
     var AppComponent;
     return {
         setters:[
@@ -23,9 +23,6 @@ System.register(['angular2/core', './navbar.component', './user.component', './p
             function (user_component_1_1) {
                 user_component_1 = user_component_1_1;
             },
-            function (post_component_1_1) {
-                post_component_1 = post_component_1_1;
-            },
             function (home_component_1_1) {
                 home_component_1 = home_component_1_1;
             },
@@ -37,6 +34,9 @@ System.register(['angular2/core', './navbar.component', './user.component', './p
             },
             function (router_1_1) {
                 router_1 = router_1_1;
+            },
+            function (postList_component_1_1) {
+                postList_component_1 = postList_component_1_1;
             },
             function (NotFound_1_1) {
                 NotFound_1 = NotFound_1_1;
@@ -51,7 +51,7 @@ System.register(['angular2/core', './navbar.component', './user.component', './p
                         { path: '/user', name: 'User', component: user_component_1.userComponent },
                         { path: '/user/:id', name: 'EditUser', component: addUser_component_1.addUserComponent },
                         { path: '/addUser', name: 'AddUser', component: addUser_component_1.addUserComponent },
-                        { path: '/post', name: 'Post', component: post_component_1.postComponent },
+                        { path: '/post', name: 'Post', component: postList_component_1.postList },
                         { path: '/*other', name: 'Other', redirectTo: ['Home'] },
                         { path: '/user/*other', name: 'NotFound', component: NotFound_1.notFound }
                     ]),

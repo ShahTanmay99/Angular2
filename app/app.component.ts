@@ -7,6 +7,7 @@ import {userService} from './userDetails.service';
 import {addUserComponent} from './addUser.component';
 import {RouteConfig, ROUTER_DIRECTIVES} from 'angular2/router';
 import {editUserComponent} from './editUser.component';
+import {postList} from './postList.component';
 import {notFound} from './NotFound';
 
 @RouteConfig([
@@ -14,7 +15,7 @@ import {notFound} from './NotFound';
     {path:'/user', name: 'User', component: userComponent},
     {path:'/user/:id', name: 'EditUser', component: addUserComponent},
     {path:'/addUser', name: 'AddUser', component: addUserComponent},
-    {path: '/post' , name: 'Post', component: postComponent},
+    {path: '/post' , name: 'Post', component: postList},
     {path: '/*other', name: 'Other', redirectTo: ['Home']},
     {path:'/user/*other', name: 'NotFound', component: notFound}
 ])
