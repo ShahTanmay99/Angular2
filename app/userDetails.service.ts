@@ -27,12 +27,19 @@ export class userService{
     private getUserUrl(id){
         return this._url+"/"+id;
     }
+    private getCommentUrl(id){
+        return this._url2+"/"+id+"/comments";
+    }
     deleteUser(User){
         return this._http.delete(this.getUserUrl(User))
         .map(res => res.json())
     }
     getPostList(){
         return this._http.get(this._url2)
+        .map(res => res.json());
+    }
+    getPostComments(id){
+        return this._http.get(this.getCommentUrl(id))
         .map(res => res.json());
     }
 }

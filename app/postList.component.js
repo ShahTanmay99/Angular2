@@ -25,6 +25,7 @@ System.register(['angular2/core', './userDetails.service'], function(exports_1, 
                 function postList(_userService) {
                     this._userService = _userService;
                     this.isLoading = true;
+                    this.isVisible = false;
                 }
                 postList.prototype.ngOnInit = function () {
                     var _this = this;
@@ -34,9 +35,19 @@ System.register(['angular2/core', './userDetails.service'], function(exports_1, 
                         _this.isLoading = false;
                     });
                 };
+                postList.prototype.onClick = function (detail) {
+                    var _this = this;
+                    this.isVisible = true;
+                    this.x = detail;
+                    console.log(this.x);
+                    this._userService.getPostComments(detail.id)
+                        .subscribe(function (Comments) {
+                        _this.Comments = Comments;
+                    });
+                };
                 postList = __decorate([
                     core_1.Component({
-                        template: "<div class=\"row\">\n    <div class=\"col-md-6\">\n            <div *ngIf=\"isLoading\"><i class=\"fa fa-spinner fa-spin fa-3x\"></i></div>\n                <ul *ngFor=\"#li of list\" class=\"list-group\">\n                        <li class=\"list-group-item\">{{li.body}}</li>\n                </ul>\n            </div>\n    </div>\n                "
+                        template: "<div class=\"row\">\n    <div class=\"col-md-6\">\n            <div *ngIf=\"isLoading\"><i class=\"fa fa-spinner fa-spin fa-3x\"></i></div>\n                <ul class=\"list-group\">\n                        <li *ngFor=\"#li of list\" class=\"list-group-item\" (click)= \"onClick(li)\" >{{li.title}}</li>\n                </ul>\n    </div>\n    <div class=\"col-md-6\" *ngIf=\"isVisible\">\n                <div class=\"panel panel-default\">\n                    <div class=\"panel-heading\">\n                        <h3 class=\"panel-title\">{{x.title}}</h3>\n                    </div>\n                        <div class=\"panel-body\">{{x.body}}</div>\n                </div>\n                <div class=\"media\" *ngFor=\"#comment of Comments\">\n                    <div class=\"media-left\">\n                        <a href=\"#\">\n                        <img class=\"media-object\" src=\"http://lorempixel.com/80/80/people/{{comment.id}}\">\n                        </a>\n                    </div>\n                    <div class=\"media-body\">\n                        <h4 class=\"media-heading\">{{comment.name}}</h4>\n                        {{comment.body}}\n                    </div>\n                </div>\n    </div>\n    </div>            "
                     }), 
                     __metadata('design:paramtypes', [userDetails_service_1.userService])
                 ], postList);

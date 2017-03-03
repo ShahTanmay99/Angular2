@@ -1,12 +1,10 @@
 import {Component} from 'angular2/core';
 import {navbarComponent} from './navbar.component';
 import {userComponent} from './user.component';
-import {postComponent} from './post.component';
 import {homeComponent} from './home.component';
 import {userService} from './userDetails.service';
 import {addUserComponent} from './addUser.component';
 import {RouteConfig, ROUTER_DIRECTIVES} from 'angular2/router';
-import {editUserComponent} from './editUser.component';
 import {postList} from './postList.component';
 import {notFound} from './NotFound';
 
