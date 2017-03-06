@@ -34,12 +34,20 @@ export class userService{
         return this._http.delete(this.getUserUrl(User))
         .map(res => res.json())
     }
-    getPostList(){
-        return this._http.get(this._url2)
+    getPostList(filter?){
+        var url = this._url2;
+        if(filter && filter.userId)
+            url = url + "?userId=" + filter.userId;
+
+        return this._http.get(url)
         .map(res => res.json());
     }
     getPostComments(id){
         return this._http.get(this.getCommentUrl(id))
+        .map(res => res.json());
+    }
+    getUserIdFromName(Name){
+        return this._http.get(this._url+"?name="+Name)
         .map(res => res.json());
     }
 }

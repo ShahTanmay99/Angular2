@@ -54,12 +54,19 @@ System.register(['angular2/http', 'angular2/core', 'rxjs/add/operator/map'], fun
                     return this._http.delete(this.getUserUrl(User))
                         .map(function (res) { return res.json(); });
                 };
-                userService.prototype.getPostList = function () {
-                    return this._http.get(this._url2)
+                userService.prototype.getPostList = function (filter) {
+                    var url = this._url2;
+                    if (filter && filter.userId)
+                        url = url + "?userId=" + filter.userId;
+                    return this._http.get(url)
                         .map(function (res) { return res.json(); });
                 };
                 userService.prototype.getPostComments = function (id) {
                     return this._http.get(this.getCommentUrl(id))
+                        .map(function (res) { return res.json(); });
+                };
+                userService.prototype.getUserIdFromName = function (Name) {
+                    return this._http.get(this._url + "?name=" + Name)
                         .map(function (res) { return res.json(); });
                 };
                 userService = __decorate([

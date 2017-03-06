@@ -32,27 +32,38 @@ System.register(['angular2/core', './userDetails.service', './loadingIcon.compon
                     this.isVisible = false;
                 }
                 postList.prototype.ngOnInit = function () {
+                    this.loadPosts();
+                    this.loadUsers();
+                };
+                postList.prototype.loadPosts = function (filter) {
                     var _this = this;
-                    this._userService.getPostList()
-                        .subscribe(function (list) {
-                        _this.list = list;
-                        _this.isLoading = false;
+                    this.isLoading = true;
+                    this._userService.getPostList(filter)
+                        .subscribe(function (list) { return _this.list = list; }, null, function () { _this.isLoading = false; });
+                };
+                postList.prototype.loadUsers = function () {
+                    var _this = this;
+                    this._userService.getuserDetails()
+                        .subscribe(function (user) {
+                        _this.user = user;
                     });
                 };
                 postList.prototype.onClick = function (detail) {
                     var _this = this;
+                    this.currentpost = null;
                     this.isVisible = true;
-                    this.x = detail;
-                    console.log(this.x);
+                    this.currentpost = detail;
                     this._userService.getPostComments(detail.id)
-                        .subscribe(function (Comments) {
-                        _this.Comments = Comments;
-                        _this.isLoad = false;
-                    });
+                        .subscribe(function (Comments) { return _this.currentpost.Comments = Comments; }, null, function () { _this.isLoad = false; });
+                };
+                postList.prototype.reload = function (x) {
+                    this.currentpost = null;
+                    this.isVisible = false;
+                    this.loadPosts(x);
                 };
                 postList = __decorate([
                     core_1.Component({
-                        template: "<div class=\"row\">\n    <div class=\"col-md-6\">\n                <Spinner [visible]= \"isLoading\"></Spinner>\n                <ul class=\"list-group\">\n                        <li *ngFor=\"#li of list\" class=\"list-group-item\" (click)= \"onClick(li)\" >{{li.title}}</li>\n                </ul>\n    </div>\n    <div class=\"col-md-6\" *ngIf=\"isVisible\">\n                <div class=\"panel panel-default\">\n                    <div class=\"panel-heading\">\n                        <h3 class=\"panel-title\">{{x.title}}</h3>\n                    </div>\n                        <div class=\"panel-body\">{{x.body}}</div>\n                </div>\n                <Spinner [visible]= \"isLoad\"></Spinner>\n                <div class=\"media\" *ngFor=\"#comment of Comments\">\n                    <div class=\"media-left\">\n                        <a href=\"#\">\n                        <img class=\"media-object\" src=\"http://lorempixel.com/80/80/people/{{comment.id}}\">\n                        </a>\n                    </div>\n                    <div class=\"media-body\">\n                        <h4 class=\"media-heading\">{{comment.name}}</h4>\n                        {{comment.body}}\n                    </div>\n                </div>\n    </div>\n    </div>            ",
+                        template: "<h1>Posts</h1>\n            <div class=\"row\">\n                <div class=\"col-md-6\">\n                <select class=\"form-control\" (change)=\"reload({userId: z.value})\" #z>\n                        <option value=\"\"> SELECT USER </option>\n                        <option *ngFor=\"#u of user\" value=\"{{u.id}}\">{{u.name}}</option>\n                </select>\n\n                            <Spinner [visible]= \"isLoading\"></Spinner>\n                            <ul class=\"list-group lists\">\n                                <li *ngFor=\"#li of list\" class=\"list-group-item\" [class.active]=\"currentpost == li\" (click)=\"onClick(li)\">{{li.title}}</li>\n                            </ul>\n                </div>\n                <div class=\"col-md-6\" *ngIf=\"isVisible\">\n                            <div class=\"panel panel-default\">\n                                <div class=\"panel-heading\">\n                                    <h3 class=\"panel-title\">{{currentpost.title}}</h3>\n                                </div>\n                                    <div class=\"panel-body\">{{currentpost.body}}</div>\n                            </div>\n                            <Spinner [visible]= \"isLoad\"></Spinner>\n                            <div class=\"media\" *ngFor=\"#comment of currentpost.Comments\">\n                                <div class=\"media-left\">\n                                    <a href=\"#\">\n                                    <img class=\"media-object\" src=\"http://lorempixel.com/80/80/people?random={{comment.id}}\">\n                                    </a>\n                                </div>\n                                <div class=\"media-body\">\n                                    <h4 class=\"media-heading\">{{comment.name}}</h4>\n                                    {{comment.body}}\n                                </div>\n                            </div>\n                </div>\n    </div>            ",
                         directives: [loadingIcon_component_1.loadIcon]
                     }), 
                     __metadata('design:paramtypes', [userDetails_service_1.userService])
