@@ -1,6 +1,6 @@
 import {Component} from 'angular2/core';
 import {ControlGroup, Control, Validators, FormBuilder} from 'angular2/common';
-import {userValidator} from './usernameValidator';
+import {userValidator} from './users/usernameValidator';
 
 @Component({
     selector: 'signup-form',

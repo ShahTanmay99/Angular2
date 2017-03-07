@@ -1,11 +1,11 @@
 import {Component} from 'angular2/core';
 import {navbarComponent} from './navbar.component';
-import {userComponent} from './user.component';
+import {userComponent} from './users/user.component';
 import {homeComponent} from './home.component';
-import {userService} from './userDetails.service';
-import {addUserComponent} from './addUser.component';
+import {userService} from './users/userDetails.service';
+import {addUserComponent} from './users/addUser.component';
 import {RouteConfig, ROUTER_DIRECTIVES} from 'angular2/router';
-import {postList} from './postList.component';
+import {postList} from './posts/postList.component';
 import {notFound} from './NotFound';
 
 @RouteConfig([

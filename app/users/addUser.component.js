@@ -84,7 +84,7 @@ System.register(['angular2/core', 'angular2/common', './usernameValidator', 'ang
                 addUserComponent = __decorate([
                     core_1.Component({
                         selector: 'addUser',
-                        templateUrl: 'app/addUserForm.html',
+                        templateUrl: 'app/users/addUserForm.html',
                         providers: [userDetails_service_1.userService]
                     }), 
                     __metadata('design:paramtypes', [common_1.FormBuilder, userDetails_service_1.userService, router_1.Router, router_1.RouteParams])

@@ -7,7 +7,7 @@ import {User} from './user.class';
 
 @Component({
     selector: 'addUser',
-    templateUrl: 'app/addUserForm.html',
+    templateUrl: 'app/users/addUserForm.html',
     providers: [userService]
 })
 export class addUserComponent implements CanDeactivate, OnInit{

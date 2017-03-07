@@ -1,4 +1,4 @@
-System.register(['angular2/core', './userDetails.service', './loadingIcon.component', './pagination.component'], function(exports_1, context_1) {
+System.register(['angular2/core', '../users/userDetails.service', '../loadingIcon.component', '../pagination.component'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -83,7 +83,7 @@ System.register(['angular2/core', './userDetails.service', './loadingIcon.compon
                 };
                 postList = __decorate([
                     core_1.Component({
-                        templateUrl: 'app/postList.html',
+                        templateUrl: 'app/posts/postList.html',
                         directives: [loadingIcon_component_1.loadIcon, pagination_component_1.PaginationComponent]
                     }), 
                     __metadata('design:paramtypes', [userDetails_service_1.userService])

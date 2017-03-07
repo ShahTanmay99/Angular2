@@ -1,10 +1,10 @@
 import {Component, OnInit} from 'angular2/core';
-import {userService} from './userDetails.service';
-import {loadIcon} from './loadingIcon.component';
-import {PaginationComponent} from './pagination.component';
+import {userService} from '../users/userDetails.service';
+import {loadIcon} from '../loadingIcon.component';
+import {PaginationComponent} from '../pagination.component';
 
 @Component({
-    templateUrl:'app/postList.html', 
+    templateUrl:'app/posts/postList.html', 
     directives:[loadIcon,PaginationComponent]
 })
 
