@@ -1,44 +1,11 @@
 import {Component, OnInit} from 'angular2/core';
 import {userService} from './userDetails.service';
 import {loadIcon} from './loadingIcon.component';
-import {posts} from './posts.class';
+import {PaginationComponent} from './pagination.component';
 
 @Component({
-    template: `<h1>Posts</h1>
-            <div class="row">
-                <div class="col-md-6">
-                <select class="form-control" (change)="reload({userId: z.value})" #z>
-                        <option value=""> SELECT USER </option>
-                        <option *ngFor="#u of user" value="{{u.id}}">{{u.name}}</option>
-                </select>
-
-                            <Spinner [visible]= "isLoading"></Spinner>
-                            <ul class="list-group lists">
-                                <li *ngFor="#li of list" class="list-group-item" [class.active]="currentpost == li" (click)="onClick(li)">{{li.title}}</li>
-                            </ul>
-                </div>
-                <div class="col-md-6" *ngIf="isVisible">
-                            <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    <h3 class="panel-title">{{currentpost.title}}</h3>
-                                </div>
-                                    <div class="panel-body">{{currentpost.body}}</div>
-                            </div>
-                            <Spinner [visible]= "isLoad"></Spinner>
-                            <div class="media" *ngFor="#comment of currentpost.Comments">
-                                <div class="media-left">
-                                    <a href="#">
-                                    <img class="media-object" src="http://lorempixel.com/80/80/people?random={{comment.id}}">
-                                    </a>
-                                </div>
-                                <div class="media-body">
-                                    <h4 class="media-heading">{{comment.name}}</h4>
-                                    {{comment.body}}
-                                </div>
-                            </div>
-                </div>
-    </div>            `,
-    directives:[loadIcon]
+    templateUrl:'app/postList.html', 
+    directives:[loadIcon,PaginationComponent]
 })
 
 export class postList implements OnInit{
@@ -51,8 +18,9 @@ export class postList implements OnInit{
     isLoad=true;
     isVisible=false;
     user: any[];
-    list: any[];
-     Id:any[];
+    list=[];
+    pagedPosts = [];
+    pageSize = 10;
     ngOnInit(){
          this.loadPosts();
          this.loadUsers();
@@ -61,7 +29,9 @@ export class postList implements OnInit{
         this.isLoading=true;
         this._userService.getPostList(filter)
          .subscribe(
-             list => this.list=list,
+             list => {this.list=list;
+             this.pagedPosts = this.getPostsInPage(1);
+            },
              null,
          () => {this.isLoading=false});
         
@@ -90,6 +60,20 @@ export class postList implements OnInit{
         this.isVisible=false;
         
          this.loadPosts(x);
+    }
+    onPageChanged(page) {
+        this.pagedPosts = this.getPostsInPage(page);
+	}
+    
+    private getPostsInPage(page){
+        var result = [];
+		var startingIndex = (page - 1) * this.pageSize;
+        var endIndex = Math.min(startingIndex + this.pageSize, this.list.length);
+
+        for (var b = startingIndex; b < endIndex; b++)
+            result.push(this.list[b]);
+            
+        return result;
     }
 }
 

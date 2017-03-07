@@ -1,4 +1,4 @@
-System.register(['angular2/core', './userDetails.service', './loadingIcon.component'], function(exports_1, context_1) {
+System.register(['angular2/core', './userDetails.service', './loadingIcon.component', './pagination.component'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(['angular2/core', './userDetails.service', './loadingIcon.compon
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, userDetails_service_1, loadingIcon_component_1;
+    var core_1, userDetails_service_1, loadingIcon_component_1, pagination_component_1;
     var postList;
     return {
         setters:[
@@ -22,6 +22,9 @@ System.register(['angular2/core', './userDetails.service', './loadingIcon.compon
             },
             function (loadingIcon_component_1_1) {
                 loadingIcon_component_1 = loadingIcon_component_1_1;
+            },
+            function (pagination_component_1_1) {
+                pagination_component_1 = pagination_component_1_1;
             }],
         execute: function() {
             postList = (function () {
@@ -30,6 +33,9 @@ System.register(['angular2/core', './userDetails.service', './loadingIcon.compon
                     this.isLoading = true;
                     this.isLoad = true;
                     this.isVisible = false;
+                    this.list = [];
+                    this.pagedPosts = [];
+                    this.pageSize = 10;
                 }
                 postList.prototype.ngOnInit = function () {
                     this.loadPosts();
@@ -39,7 +45,10 @@ System.register(['angular2/core', './userDetails.service', './loadingIcon.compon
                     var _this = this;
                     this.isLoading = true;
                     this._userService.getPostList(filter)
-                        .subscribe(function (list) { return _this.list = list; }, null, function () { _this.isLoading = false; });
+                        .subscribe(function (list) {
+                        _this.list = list;
+                        _this.pagedPosts = _this.getPostsInPage(1);
+                    }, null, function () { _this.isLoading = false; });
                 };
                 postList.prototype.loadUsers = function () {
                     var _this = this;
@@ -61,10 +70,21 @@ System.register(['angular2/core', './userDetails.service', './loadingIcon.compon
                     this.isVisible = false;
                     this.loadPosts(x);
                 };
+                postList.prototype.onPageChanged = function (page) {
+                    this.pagedPosts = this.getPostsInPage(page);
+                };
+                postList.prototype.getPostsInPage = function (page) {
+                    var result = [];
+                    var startingIndex = (page - 1) * this.pageSize;
+                    var endIndex = Math.min(startingIndex + this.pageSize, this.list.length);
+                    for (var b = startingIndex; b < endIndex; b++)
+                        result.push(this.list[b]);
+                    return result;
+                };
                 postList = __decorate([
                     core_1.Component({
-                        template: "<h1>Posts</h1>\n            <div class=\"row\">\n                <div class=\"col-md-6\">\n                <select class=\"form-control\" (change)=\"reload({userId: z.value})\" #z>\n                        <option value=\"\"> SELECT USER </option>\n                        <option *ngFor=\"#u of user\" value=\"{{u.id}}\">{{u.name}}</option>\n                </select>\n\n                            <Spinner [visible]= \"isLoading\"></Spinner>\n                            <ul class=\"list-group lists\">\n                                <li *ngFor=\"#li of list\" class=\"list-group-item\" [class.active]=\"currentpost == li\" (click)=\"onClick(li)\">{{li.title}}</li>\n                            </ul>\n                </div>\n                <div class=\"col-md-6\" *ngIf=\"isVisible\">\n                            <div class=\"panel panel-default\">\n                                <div class=\"panel-heading\">\n                                    <h3 class=\"panel-title\">{{currentpost.title}}</h3>\n                                </div>\n                                    <div class=\"panel-body\">{{currentpost.body}}</div>\n                            </div>\n                            <Spinner [visible]= \"isLoad\"></Spinner>\n                            <div class=\"media\" *ngFor=\"#comment of currentpost.Comments\">\n                                <div class=\"media-left\">\n                                    <a href=\"#\">\n                                    <img class=\"media-object\" src=\"http://lorempixel.com/80/80/people?random={{comment.id}}\">\n                                    </a>\n                                </div>\n                                <div class=\"media-body\">\n                                    <h4 class=\"media-heading\">{{comment.name}}</h4>\n                                    {{comment.body}}\n                                </div>\n                            </div>\n                </div>\n    </div>            ",
-                        directives: [loadingIcon_component_1.loadIcon]
+                        templateUrl: 'app/postList.html',
+                        directives: [loadingIcon_component_1.loadIcon, pagination_component_1.PaginationComponent]
                     }), 
                     __metadata('design:paramtypes', [userDetails_service_1.userService])
                 ], postList);
